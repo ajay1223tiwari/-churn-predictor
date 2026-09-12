@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate data
+        run: python generate_data.py
+
+      - name: Train model
+        run: python train_model.py
+
+      - name: Sanity-check API import
+        run: python -c "from app import app; print('App loaded OK')"
+
+  # Render auto-deploys on push to main once the repo is connected —
+  # this job is a placeholder to show where a deploy step would trigger.
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Notify
+        run: echo "Build passed on main — Render will auto-deploy this commit."
