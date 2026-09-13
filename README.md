@@ -21,7 +21,8 @@ support-ticket volume. Returns a churn probability and risk level (Low / Medium 
 - **Frontend:** vanilla HTML/CSS/JS calling the `/predict` endpoint
 - **CI/CD:** GitHub Actions — installs deps, regenerates data, retrains the model, and
   smoke-tests the API on every push
-- **Deployment:** Render (free tier) — see below
+- **Deployment:** https://churn-predictor-1-4suq.onrender.com/app/
+
 
 ## Project structure
 
